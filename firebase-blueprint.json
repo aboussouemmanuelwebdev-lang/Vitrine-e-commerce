@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "Full name of the user" },
+        "email": { "type": "string", "format": "email", "description": "User email address" },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "User role for access control" },
+        "wishlist": { "type": "array", "items": { "type": "string" }, "description": "List of product IDs in wishlist" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Review": {
+      "title": "Product Review",
+      "description": "Customer review and rating for a product.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Review ID" },
+        "productId": { "type": "string", "description": "ID of the product being reviewed" },
+        "userId": { "type": "string", "description": "UID of the reviewer" },
+        "userName": { "type": "string", "description": "Name of the reviewer" },
+        "rating": { "type": "integer", "minimum": 1, "maximum": 5, "description": "Star rating (1-5)" },
+        "comment": { "type": "string", "description": "Review text content" },
+        "likes": { "type": "integer", "description": "Number of helpful votes" },
+        "likedBy": { "type": "array", "items": { "type": "string" }, "description": "List of user UIDs who liked this review" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Review submission timestamp" }
+      },
+      "required": ["productId", "userId", "userName", "rating", "comment", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Product review documents."
+    }
+  }
+}

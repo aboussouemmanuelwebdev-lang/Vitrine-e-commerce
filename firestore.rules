@@ -1,0 +1,161 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: /users/{userId}
+    // Document ID: userId (UID from Auth)
+    // Fields:
+    //   - uid: string (required, immutable) - Firebase Auth UID
+    //   - name: string (optional, max 50 chars) - Full name
+    //   - email: string (required, immutable, email format) - User email
+    //   - role: string (required, enum: ['user', 'admin']) - User role
+    //   - wishlist: list (optional, max 100 items) - List of product IDs
+    //   - createdAt: timestamp (required, immutable) - Account creation time
+    //
+    // Collection: /reviews/{reviewId}
+    // Document ID: auto-generated
+    // Fields:
+    //   - productId: string (required, immutable) - ID of the product
+    //   - userId: string (required, immutable) - UID of the reviewer
+    //   - userName: string (required, max 50 chars) - Name of the reviewer
+    //   - rating: int (required, 1-5) - Star rating
+    //   - comment: string (required, max 1000 chars) - Review text
+    //   - likes: int (required, >= 0) - Number of helpful votes
+    //   - likedBy: list (required, max 1000 items) - List of UIDs who liked
+    //   - createdAt: timestamp (required, immutable) - Submission time
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         (request.auth.token.email == "aboussouemmanuel.webdev@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isRecent(time) {
+      return time > request.time - duration.value(5, 'm') && time < request.time + duration.value(5, 'm');
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return hasRequiredFields(['uid', 'email', 'role', 'createdAt']) &&
+             hasOnlyAllowedFields(['uid', 'name', 'email', 'role', 'wishlist', 'createdAt']) &&
+             data.uid == request.auth.uid &&
+             data.email == request.auth.token.email &&
+             isValidEmail(data.email) &&
+             data.role in ['user', 'admin'] &&
+             (data.name == null || (data.name is string && data.name.size() <= 50)) &&
+             (data.wishlist == null || (data.wishlist is list && data.wishlist.size() <= 100)) &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidReview(data) {
+      return hasRequiredFields(['productId', 'userId', 'userName', 'rating', 'comment', 'likes', 'likedBy', 'createdAt']) &&
+             hasOnlyAllowedFields(['productId', 'userId', 'userName', 'rating', 'comment', 'likes', 'likedBy', 'createdAt']) &&
+             data.productId is string &&
+             data.userId == request.auth.uid &&
+             data.userName is string && data.userName.size() <= 50 &&
+             data.rating is int && data.rating >= 1 && data.rating <= 5 &&
+             data.comment is string && data.comment.size() <= 1000 &&
+             data.likes is int && data.likes >= 0 &&
+             data.likedBy is list && data.likedBy.size() <= 1000 &&
+             data.createdAt is timestamp;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // User Profiles
+    match /users/{userId} {
+      // Users can only read their own profile (PII protection)
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Users can create their own profile if they are not setting themselves as admin
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && 
+                      (request.resource.data.role == 'user' || isAdmin());
+      
+      // Users can update their own profile, but cannot change their role or email
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) && 
+                      request.resource.data.role == resource.data.role &&
+                      request.resource.data.email == resource.data.email &&
+                      request.resource.data.uid == resource.data.uid &&
+                      request.resource.data.createdAt == resource.data.createdAt;
+      
+      // Admins can do anything
+      allow delete: if isAdmin();
+    }
+
+    // Reviews
+    match /reviews/{reviewId} {
+      // Anyone can read reviews
+      allow read: if true;
+      
+      // Authenticated users can create reviews
+      allow create: if isAuthenticated() && isValidReview(request.resource.data) && 
+                      isRecent(request.resource.data.createdAt);
+      
+      // Owners can update their reviews (except productId, userId, createdAt)
+      // Others can only update 'likes' and 'likedBy' (for voting)
+      allow update: if isAuthenticated() && (
+        // Owner update
+        (request.auth.uid == resource.data.userId && isValidReview(request.resource.data) &&
+         request.resource.data.productId == resource.data.productId &&
+         request.resource.data.userId == resource.data.userId &&
+         request.resource.data.createdAt == resource.data.createdAt) ||
+        // Voting update (atomic increment/decrement check)
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'likedBy']) &&
+         math.abs(request.resource.data.likes - resource.data.likes) == 1 &&
+         (
+           // Like
+           (request.resource.data.likes == resource.data.likes + 1 && 
+            !(request.auth.uid in resource.data.likedBy) && 
+            request.auth.uid in request.resource.data.likedBy) ||
+           // Unlike
+           (request.resource.data.likes == resource.data.likes - 1 && 
+            request.auth.uid in resource.data.likedBy && 
+            !(request.auth.uid in request.resource.data.likedBy))
+         ))
+      );
+      
+      // Owners or admins can delete
+      allow delete: if isAdmin() || (isAuthenticated() && request.auth.uid == resource.data.userId);
+    }
+  }
+}
