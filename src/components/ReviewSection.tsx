@@ -229,7 +229,9 @@ export function ReviewSection({ productId, onAuthRequired }: ReviewSectionProps)
                   <div>
                     <p className="font-bold text-sm">{review.userName}</p>
                     <p className="text-[10px] text-gray-400 uppercase tracking-widest">
-                      {review.createdAt?.toDate ? review.createdAt.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : 'À l\'instant'}
+                      {review.createdAt?.toDate 
+                        ? `${review.createdAt.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} à ${review.createdAt.toDate().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`
+                        : 'À l\'instant'}
                     </p>
                   </div>
                 </div>

@@ -6,14 +6,16 @@ import { ProductCard } from './components/ProductCard';
 import { Testimonials } from './components/Testimonials';
 import { ProductModal } from './components/ProductModal';
 import { AuthModal } from './components/AuthModal';
+import { Chatbot } from './components/Chatbot';
 import { products } from './data/products';
 import { Product } from './types';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Sparkles, Globe, ShieldCheck, Instagram, Heart } from 'lucide-react';
+import { ArrowRight, Sparkles, Globe, ShieldCheck, Instagram, Heart, ShieldAlert } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, onSnapshot, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { auth, db, handleFirestoreError, OperationType } from './firebase';
 import { cn, scrollToSection } from './lib/utils';
+import { useSiteConfig } from './hooks/useSiteConfig';
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -21,6 +23,7 @@ export default function App() {
   const [isAuthReady, setIsAuthReady] = useState(false);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [showWishlistOnly, setShowWishlistOnly] = useState(false);
+  const { isAdmin } = useSiteConfig();
 
   // Listen for Auth changes
   useEffect(() => {
@@ -116,6 +119,21 @@ export default function App() {
         onProductClick={(product) => setSelectedProduct(product)}
       />
 
+      {/* Admin Mode Indicator */}
+      <AnimatePresence>
+        {isAdmin && (
+          <motion.div 
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            className="fixed top-24 right-6 z-[50] bg-amber-500 text-white px-4 py-2 rounded-full shadow-2xl flex items-center space-x-2 border-2 border-white animate-pulse"
+          >
+            <ShieldAlert size={16} />
+            <span className="text-[10px] font-black uppercase tracking-widest">Mode Admin Actif</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto space-y-32">
         {/* Hero Section */}
         <section id="hero">
@@ -126,6 +144,41 @@ export default function App() {
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
           />
+        </section>
+
+        {/* Nouveautés 2026 Section */}
+        <section id="nouveautes">
+          <div className="mb-12">
+            <div className="flex items-center space-x-2 text-amber-600 mb-4">
+              <Sparkles size={16} />
+              <span className="text-xs font-bold uppercase tracking-widest">Nouveautés 2026</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
+              L'Avenir du Luxe, <br />Déjà à Votre Portée.
+            </h2>
+          </div>
+
+          <div className="flex overflow-x-auto gap-6 pb-8 scrollbar-hide snap-x snap-mandatory">
+            {products
+              .filter(p => p.availability === 'Coming Soon')
+              .slice(0, 5)
+              .map((product) => (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  key={product.id} 
+                  className="flex-shrink-0 w-[85vw] md:w-[400px] snap-center cursor-pointer"
+                  onClick={() => setSelectedProduct(product)}
+                >
+                  <ProductCard 
+                    product={product} 
+                    isWishlisted={wishlist.includes(product.id)}
+                    onWishlistToggle={() => toggleWishlist(product.id)}
+                  />
+                </motion.div>
+              ))}
+          </div>
         </section>
 
         {/* Collection Section */}
@@ -168,7 +221,7 @@ export default function App() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   key={product.id} 
-                  className="flex-shrink-0 w-[85vw] md:w-auto snap-center cursor-pointer"
+                  className="flex-shrink-0 w-[85vw] md:w-auto snap-center cursor-pointer h-full"
                   onClick={() => setSelectedProduct(product)}
                 >
                   <ProductCard 
@@ -275,6 +328,8 @@ export default function App() {
         isOpen={isAuthModalOpen} 
         onClose={() => setIsAuthModalOpen(false)} 
       />
+
+      <Chatbot />
     </div>
   );
 }

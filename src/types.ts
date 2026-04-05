@@ -4,6 +4,7 @@ export interface Product {
   description: string;
   price: string;
   category: string;
+  subcategory: string;
   images: string[];
   specifications: {
     label: string;
@@ -20,4 +21,5 @@ export interface Testimonial {
   content: string;
   platform: 'instagram' | 'tiktok';
   avatar: string;
+  image?: string;
 }

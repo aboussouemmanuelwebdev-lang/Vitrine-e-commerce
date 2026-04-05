@@ -157,5 +157,23 @@ service cloud.firestore {
       // Owners or admins can delete
       allow delete: if isAdmin() || (isAuthenticated() && request.auth.uid == resource.data.userId);
     }
+
+    // Site Configuration
+    match /config/site {
+      // Anyone can read site config
+      allow read: if true;
+      
+      // Only admins can update site config
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Product Overrides
+    match /productOverrides/{productId} {
+      // Anyone can read product overrides
+      allow read: if true;
+      
+      // Only admins can update product overrides
+      allow create, update, delete: if isAdmin();
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowUpRight, Sparkles, Zap, ShieldCheck } from 'lucide-react';
 import { BlurImage } from './BlurImage';
+import { useSiteConfig } from '../hooks/useSiteConfig';
 
 interface BentoGridProps {
   onAuthClick: () => void;
@@ -8,6 +9,8 @@ interface BentoGridProps {
 }
 
 export function BentoGrid({ onAuthClick, onScrollToCollection }: BentoGridProps) {
+  const { isAdmin, getImageUrl } = useSiteConfig();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[800px] md:h-[600px]">
       <motion.div 
@@ -17,6 +20,7 @@ export function BentoGrid({ onAuthClick, onScrollToCollection }: BentoGridProps)
       >
         <BlurImage 
           src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200" 
+          imageKey="hero_main"
           className="absolute inset-0 w-full h-full opacity-40 group-hover:scale-105 transition-transform duration-1000"
           alt="Hero"
         />
@@ -56,10 +60,15 @@ export function BentoGrid({ onAuthClick, onScrollToCollection }: BentoGridProps)
             <span className="text-xs font-bold uppercase tracking-widest">Performance</span>
           </div>
           <h3 className="text-2xl font-bold tracking-tight">Livraison Ultra-Rapide</h3>
-          <p className="text-neutral-500 mt-2">Service gants blancs dans toute l'Europe.</p>
+          <p className="text-neutral-500 mt-2">Service gants blancs dans toute l'Afrique.</p>
         </div>
-        <div className="w-24 h-24 bg-white dark:bg-neutral-700 rounded-3xl shadow-sm flex items-center justify-center rotate-12 group-hover:rotate-0 transition-transform duration-500">
-          <img src="https://cdn-icons-png.flaticon.com/512/726/726455.png" className="w-12 h-12 grayscale" alt="Delivery" />
+        <div className="w-24 h-24 bg-white dark:bg-neutral-700 rounded-3xl shadow-sm flex items-center justify-center rotate-12 group-hover:rotate-0 transition-transform duration-500 relative">
+          <BlurImage 
+            src="https://cdn-icons-png.flaticon.com/512/726/726455.png"
+            imageKey="delivery_icon"
+            className="w-12 h-12 grayscale bg-transparent" 
+            alt="Delivery" 
+          />
         </div>
       </motion.div>
 

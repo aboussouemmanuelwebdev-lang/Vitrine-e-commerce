@@ -11,7 +11,7 @@ export function Testimonials() {
           key={t.id}
           initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
           whileInView={{ opacity: 1, x: 0 }}
-          className="bg-white dark:bg-neutral-900 p-8 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm"
+          className="bg-white dark:bg-neutral-900 p-8 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm flex flex-col"
         >
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
@@ -27,10 +27,15 @@ export function Testimonials() {
               <Music2 size={20} className="text-cyan-500" />
             )}
           </div>
-          <p className="text-lg font-medium leading-relaxed text-gray-700 dark:text-gray-300 italic">
+          <p className="text-lg font-medium leading-relaxed text-gray-700 dark:text-gray-300 italic mb-6">
             "{t.content}"
           </p>
-          <div className="mt-6 pt-6 border-t border-gray-50 dark:border-white/5 flex items-center justify-between">
+          {t.image && (
+            <div className="mb-6 rounded-2xl overflow-hidden aspect-video">
+              <BlurImage src={t.image} alt={t.author} className="w-full h-full object-cover" />
+            </div>
+          )}
+          <div className="mt-auto pt-6 border-t border-gray-50 dark:border-white/5 flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Client Vérifié</span>
             <div className="flex space-x-1">
               {[1,2,3,4,5].map(s => (

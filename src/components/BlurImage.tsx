@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { cn } from '../lib/utils';
+import { useSiteConfig } from '../hooks/useSiteConfig';
 
 interface BlurImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
   className?: string;
+  imageKey?: string;
   onLoad?: React.ReactEventHandler<HTMLImageElement>;
 }
 
-export function BlurImage({ src, alt, className, onLoad, ...props }: BlurImageProps) {
+export function BlurImage({ src, alt, className, imageKey, onLoad, ...props }: BlurImageProps) {
   const [isLoading, setLoading] = useState(true);
+  const { getImageUrl } = useSiteConfig();
+
+  const currentSrc = imageKey ? getImageUrl(imageKey, src) : src;
 
   return (
-    <div className={cn("overflow-hidden bg-gray-100 dark:bg-neutral-800", className)}>
+    <div className={cn("overflow-hidden bg-gray-100 dark:bg-neutral-800 relative group/image", className)}>
       <img
         {...props}
-        src={src}
+        src={currentSrc}
         alt={alt}
         loading="lazy"
         onLoad={(e) => {

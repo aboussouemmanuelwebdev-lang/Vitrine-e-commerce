@@ -30,6 +30,19 @@
         "createdAt": { "type": "string", "format": "date-time", "description": "Review submission timestamp" }
       },
       "required": ["productId", "userId", "userName", "rating", "comment", "createdAt"]
+    },
+    "SiteConfig": {
+      "title": "Site Configuration",
+      "description": "Global settings and custom assets for the site.",
+      "type": "object",
+      "properties": {
+        "customImages": { 
+          "type": "object", 
+          "description": "Map of image keys to custom URLs",
+          "additionalProperties": { "type": "string" }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
     }
   },
   "firestore": {
@@ -40,6 +53,10 @@
     "/reviews/{reviewId}": {
       "schema": "Review",
       "description": "Product review documents."
+    },
+    "/config/site": {
+      "schema": "SiteConfig",
+      "description": "Global site configuration and assets."
     }
   }
 }

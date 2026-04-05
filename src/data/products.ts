@@ -7,6 +7,7 @@ export const products: Product[] = [
     description: 'Un chef-d\'œuvre d\'ingénierie horlogère, alliant esthétique intemporelle et matériaux de pointe.',
     price: '8 187 500 FCFA',
     category: 'Montres',
+    subcategory: 'Automatique',
     images: [
       'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&q=80&w=800',
@@ -25,6 +26,7 @@ export const products: Product[] = [
     description: 'Expérience audio immersive avec réduction adaptative du bruit et conscience spatiale.',
     price: '588 845 FCFA',
     category: 'Audio',
+    subcategory: 'Casques',
     images: [
       'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=800',
@@ -43,6 +45,7 @@ export const products: Product[] = [
     description: 'L\'avenir de la productivité au travail avec recharge sans fil intégrée et éclairage ambiant.',
     price: '1 604 750 FCFA',
     category: 'Mobilier',
+    subcategory: 'Bureau',
     images: [
       'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1593642532400-2682810df593?auto=format&fit=crop&q=80&w=800',
@@ -61,6 +64,7 @@ export const products: Product[] = [
     description: 'Casque VR ultra-léger avec résolution 8K et retour haptique.',
     price: '786 000 FCFA',
     category: 'Tech',
+    subcategory: 'VR',
     images: [
       'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&q=80&w=800',
@@ -79,6 +83,7 @@ export const products: Product[] = [
     description: 'Purificateur d\'air intelligent avec filtration HEPA de qualité médicale et design sculptural.',
     price: '1 211 750 FCFA',
     category: 'Maison',
+    subcategory: 'Purificateurs',
     images: [
       'https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1595433707802-68267d83760a?auto=format&fit=crop&q=80&w=800',
@@ -97,6 +102,7 @@ export const products: Product[] = [
     description: 'La machine à espresso ultime pour les connaisseurs, fabriquée en titane brossé.',
     price: '2 751 000 FCFA',
     category: 'Cuisine',
+    subcategory: 'Café',
     images: [
       'https://images.unsplash.com/photo-1510972527921-ce0420f5d592?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=800',
@@ -115,6 +121,7 @@ export const products: Product[] = [
     description: 'Système hydroponique autonome avec éclairage LED spectre complet et réservoir intelligent.',
     price: '360 250 FCFA',
     category: 'Lifestyle',
+    subcategory: 'Jardinage',
     images: [
       'https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&q=80&w=800',
@@ -133,8 +140,8 @@ export const products: Product[] = [
     description: 'Confort absolu et design organique pour ce fauteuil iconique en velours de soie.',
     price: '2 489 000 FCFA',
     category: 'Mobilier',
+    subcategory: 'Salon',
     images: [
-      'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=80&w=800',
     ],
     specifications: [
@@ -151,6 +158,7 @@ export const products: Product[] = [
     description: 'Miroir intelligent avec affichage OLED intégré, analyse de la peau et assistant vocal.',
     price: '2 096 000 FCFA',
     category: 'Tech',
+    subcategory: 'Smart Home',
     images: [
       'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=800',
@@ -169,6 +177,7 @@ export const products: Product[] = [
     description: 'Salon de jardin luxueux avec tissus résistants aux intempéries et structure en aluminium brossé.',
     price: '4 912 500 FCFA',
     category: 'Mobilier',
+    subcategory: 'Extérieur',
     images: [
       'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800',
@@ -187,6 +196,7 @@ export const products: Product[] = [
     description: 'Station de travail ultime avec refroidissement liquide et composants de dernière génération.',
     price: '6 419 000 FCFA',
     category: 'Tech',
+    subcategory: 'Informatique',
     images: [
       'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800',
@@ -205,6 +215,7 @@ export const products: Product[] = [
     description: 'Couteau de chef forgé à la main en titane et acier damas, équilibre parfait.',
     price: '720 500 FCFA',
     category: 'Cuisine',
+    subcategory: 'Ustensiles',
     images: [
       'https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1614362984862-3b18a2a0b0bb?auto=format&fit=crop&q=80&w=800',
@@ -223,6 +234,7 @@ export const products: Product[] = [
     description: 'Cadre de lit minimaliste avec éclairage de lecture intégré et ports de charge dissimulés.',
     price: '3 209 500 FCFA',
     category: 'Mobilier',
+    subcategory: 'Chambre',
     images: [
       'https://images.unsplash.com/photo-1505693419148-403bb22b9ff1?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800',
@@ -241,6 +253,7 @@ export const products: Product[] = [
     description: 'Serrure biométrique ultra-sécurisée avec reconnaissance faciale et accès à distance.',
     price: '425 750 FCFA',
     category: 'Maison',
+    subcategory: 'Sécurité',
     images: [
       'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800',
@@ -259,6 +272,7 @@ export const products: Product[] = [
     description: 'Mur végétal autonome pour cultiver vos herbes et légumes à l\'intérieur toute l\'année.',
     price: '1 375 500 FCFA',
     category: 'Lifestyle',
+    subcategory: 'Jardinage',
     images: [
       'https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&q=80&w=800',
@@ -277,6 +291,7 @@ export const products: Product[] = [
     description: 'Téléviseur OLED 8K transparent qui se fond dans votre décor lorsqu\'il est éteint.',
     price: '9 825 000 FCFA',
     category: 'Tech',
+    subcategory: 'Écrans',
     images: [
       'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1558885544-2defc62e2e2b?auto=format&fit=crop&q=80&w=800',
@@ -295,6 +310,7 @@ export const products: Product[] = [
     description: 'Cave à vin connectée avec contrôle précis de la température et de l\'humidité par zone.',
     price: '4 061 000 FCFA',
     category: 'Cuisine',
+    subcategory: 'Vin',
     images: [
       'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1553390774-b4822481c894?auto=format&fit=crop&q=80&w=800',
@@ -313,6 +329,7 @@ export const products: Product[] = [
     description: 'Chaise de jeu ergonomique avec massage intégré et système de refroidissement actif.',
     price: '949 750 FCFA',
     category: 'Mobilier',
+    subcategory: 'Gaming',
     images: [
       'https://images.unsplash.com/photo-1598550476439-6847785fce66?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&q=80&w=800',
@@ -331,6 +348,7 @@ export const products: Product[] = [
     description: 'Projecteur 4K laser ultra-courte focale avec système audio intégré et interface intelligente.',
     price: '2 489 000 FCFA',
     category: 'Tech',
+    subcategory: 'Projecteurs',
     images: [
       'https://images.unsplash.com/photo-1535016120720-40c646be8960?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&q=80&w=800',
@@ -349,6 +367,7 @@ export const products: Product[] = [
     description: 'Vélo de route ultra-léger avec cadre en titane et transmission électronique sans fil.',
     price: '7 532 500 FCFA',
     category: 'Lifestyle',
+    subcategory: 'Sport',
     images: [
       'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1532298229144-0ee05165fe5b?auto=format&fit=crop&q=80&w=800',
@@ -367,6 +386,7 @@ export const products: Product[] = [
     description: 'Lit intelligent avec suivi du sommeil, contrôle de la température et inclinaison automatique.',
     price: '5 829 500 FCFA',
     category: 'Mobilier',
+    subcategory: 'Chambre Connectée',
     images: [
       'https://images.unsplash.com/photo-1505693419148-403bb22b9ff1?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800',
@@ -385,6 +405,7 @@ export const products: Product[] = [
     description: 'Purificateur d\'air industriel pour la maison avec filtration HEPA de pointe et capteurs de CO2.',
     price: '1 441 000 FCFA',
     category: 'Maison',
+    subcategory: 'Purificateurs',
     images: [
       'https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1595433707802-68267d83760a?auto=format&fit=crop&q=80&w=800',
@@ -403,6 +424,7 @@ export const products: Product[] = [
     description: 'Machine à espresso manuelle de haute précision pour les puristes du café.',
     price: '2 292 500 FCFA',
     category: 'Cuisine',
+    subcategory: 'Café',
     images: [
       'https://images.unsplash.com/photo-1510972527921-ce0420f5d592?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=800',
@@ -421,6 +443,7 @@ export const products: Product[] = [
     description: 'Casque de réalité virtuelle autonome avec écrans Micro-OLED et suivi oculaire.',
     price: '1 834 000 FCFA',
     category: 'Tech',
+    subcategory: 'VR',
     images: [
       'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&q=80&w=800',
@@ -439,6 +462,7 @@ export const products: Product[] = [
     description: 'Parasol intelligent avec panneaux solaires, ports de charge et éclairage LED intégré.',
     price: '786 000 FCFA',
     category: 'Lifestyle',
+    subcategory: 'Extérieur',
     images: [
       'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800',
@@ -457,6 +481,7 @@ export const products: Product[] = [
     description: 'Aquarium intelligent avec filtration automatique, éclairage programmable et suivi via app.',
     price: '1 637 500 FCFA',
     category: 'Maison',
+    subcategory: 'Aquariums',
     images: [
       'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800',
@@ -475,6 +500,7 @@ export const products: Product[] = [
     description: 'Ensemble complet de couteaux de cuisine en titane avec bloc de rangement magnétique.',
     price: '1 899 500 FCFA',
     category: 'Cuisine',
+    subcategory: 'Ustensiles',
     images: [
       'https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1614362984862-3b18a2a0b0bb?auto=format&fit=crop&q=80&w=800',
@@ -493,6 +519,7 @@ export const products: Product[] = [
     description: 'Bureau de jeu motorisé avec tapis de souris intégral et gestion des câbles invisible.',
     price: '1 277 250 FCFA',
     category: 'Mobilier',
+    subcategory: 'Bureau',
     images: [
       'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=800',
       'https://images.unsplash.com/photo-1593642532400-2682810df593?auto=format&fit=crop&q=80&w=800',
@@ -515,6 +542,7 @@ export const testimonials: Testimonial[] = [
     content: 'Le Chronos Elite est absolument magnifique. Le savoir-faire est d\'un autre niveau.',
     platform: 'instagram',
     avatar: 'https://i.pravatar.cc/150?u=alex',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800',
   },
   {
     id: '2',
@@ -523,5 +551,6 @@ export const testimonials: Testimonial[] = [
     content: 'Aura Soundscape Pro a changé ma façon d\'écouter de la musique. L\'audio spatial est époustouflant.',
     platform: 'tiktok',
     avatar: 'https://i.pravatar.cc/150?u=sarah',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800',
   },
 ];

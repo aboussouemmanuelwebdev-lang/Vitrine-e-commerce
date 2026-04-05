@@ -92,10 +92,22 @@ export function Navbar({ onLoginClick, onProductClick }: NavbarProps) {
               className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60]"
             />
             <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={{
+                closed: { x: '100%' },
+                open: { 
+                  x: 0,
+                  transition: {
+                    type: 'spring',
+                    damping: 25,
+                    stiffness: 200,
+                    staggerChildren: 0.1,
+                    delayChildren: 0.2
+                  }
+                }
+              }}
               className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white dark:bg-neutral-900 z-[70] shadow-2xl p-8 flex flex-col"
             >
               <div className="flex justify-between items-center mb-12">
@@ -108,41 +120,48 @@ export function Navbar({ onLoginClick, onProductClick }: NavbarProps) {
               </div>
               
               <div className="flex flex-col space-y-8">
-                <button 
-                  onClick={() => { scrollToSection('collection'); setIsMenuOpen(false); }} 
-                  className="text-2xl font-bold tracking-tight hover:text-gray-500 transition-colors text-left"
-                >
-                  Collection
-                </button>
-                <button 
-                  onClick={() => { scrollToSection('hero'); setIsMenuOpen(false); }} 
-                  className="text-2xl font-bold tracking-tight hover:text-gray-500 transition-colors text-left"
-                >
-                  Sur Mesure
-                </button>
-                <button 
-                  onClick={() => { scrollToSection('reassurance'); setIsMenuOpen(false); }} 
-                  className="text-2xl font-bold tracking-tight hover:text-gray-500 transition-colors text-left"
-                >
-                  Héritage
-                </button>
+                {[
+                  { label: 'Collection', id: 'collection' },
+                  { label: 'Sur Mesure', id: 'hero' },
+                  { label: 'Héritage', id: 'reassurance' }
+                ].map((item) => (
+                  <motion.button 
+                    key={item.id}
+                    variants={{
+                      closed: { opacity: 0, x: 20 },
+                      open: { opacity: 1, x: 0 }
+                    }}
+                    onClick={() => { scrollToSection(item.id); setIsMenuOpen(false); }} 
+                    className="text-2xl font-bold tracking-tight hover:text-gray-500 transition-colors text-left"
+                  >
+                    {item.label}
+                  </motion.button>
+                ))}
               </div>
 
               <div className="mt-auto space-y-4">
-                <button 
+                <motion.button 
+                  variants={{
+                    closed: { opacity: 0, y: 20 },
+                    open: { opacity: 1, y: 0 }
+                  }}
                   onClick={() => { onLoginClick(); setIsMenuOpen(false); }}
                   className="w-full flex items-center justify-center space-x-3 border border-gray-200 dark:border-white/10 py-4 rounded-2xl font-bold hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                 >
                   <User size={18} />
                   <span>Mon Compte</span>
-                </button>
-                <button 
+                </motion.button>
+                <motion.button 
+                  variants={{
+                    closed: { opacity: 0, y: 20 },
+                    open: { opacity: 1, y: 0 }
+                  }}
                   onClick={() => { scrollToSection('collection'); setIsMenuOpen(false); }}
                   className="w-full flex items-center justify-center space-x-3 bg-black dark:bg-white text-white dark:text-black py-4 rounded-2xl font-bold hover:opacity-90 transition-opacity"
                 >
                   <Calendar size={18} />
                   <span>Prendre Rendez-vous</span>
-                </button>
+                </motion.button>
               </div>
             </motion.div>
           </>
