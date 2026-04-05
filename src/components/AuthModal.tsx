@@ -6,7 +6,8 @@ import {
   createUserWithEmailAndPassword, 
   signOut, 
   GoogleAuthProvider, 
-  signInWithPopup 
+  signInWithPopup,
+  sendPasswordResetEmail 
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db, handleFirestoreError, OperationType } from '../firebase';
@@ -23,6 +24,32 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setError("Veuillez saisir votre adresse email pour réinitialiser votre mot de passe.");
+      return;
+    }
+    setIsLoading(true);
+    setError(null);
+    setSuccessMessage(null);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setSuccessMessage("Un email de réinitialisation a été envoyé à votre adresse.");
+    } catch (err: any) {
+      console.error("Reset Error:", err);
+      if (err.code === 'auth/user-not-found') {
+        setError("Aucun compte n'est associé à cet email.");
+      } else if (err.code === 'auth/invalid-email') {
+        setError("L'adresse email n'est pas valide.");
+      } else {
+        setError("Une erreur est survenue lors de l'envoi de l'email de réinitialisation.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
@@ -69,6 +96,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    setSuccessMessage(null);
     
     try {
       if (isLogin) {
@@ -195,6 +223,12 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   </div>
                 )}
 
+                {successMessage && (
+                  <div className="mb-6 p-4 bg-green-50 text-green-600 text-xs rounded-2xl font-medium">
+                    {successMessage}
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {!isLogin && (
                     <div className="relative">
@@ -231,6 +265,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                       className="w-full bg-gray-50 dark:bg-white/5 border border-transparent focus:border-black dark:focus:border-white rounded-2xl py-4 pl-12 pr-4 text-sm outline-none transition-all"
                     />
                   </div>
+
+                  {isLogin && (
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        onClick={handleForgotPassword}
+                        className="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                      >
+                        Mot de passe oublié ?
+                      </button>
+                    </div>
+                  )}
 
                   <button
                     type="submit"

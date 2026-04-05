@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, X, Send, Sparkles, User, Bot, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, User, Bot, Loader2, Phone } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import { cn } from '../lib/utils';
 
@@ -13,7 +13,7 @@ export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: 'Bonjour. Je suis votre Concierge Luxe. Comment puis-je vous assister dans votre quête d\'excellence aujourd\'hui ?' }
+    { role: 'model', text: 'Bonjour. Je suis votre Concierge Luxe. Comment puis-je vous assister dans votre quête d\'excellence aujourd\'hui ? Vous pouvez aussi me contacter directement sur WhatsApp via l\'icône en haut à droite.' }
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -112,12 +112,23 @@ RÈGLES STRICTES :
                   </div>
                 </div>
               </div>
-              <button 
-                onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-              >
-                <X size={16} />
-              </button>
+              <div className="flex items-center space-x-2">
+                <a 
+                  href="https://wa.me/2250104427006" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center hover:scale-110 transition-transform"
+                  title="Contacter sur WhatsApp"
+                >
+                  <MessageCircle size={16} className="fill-current" />
+                </a>
+                <button 
+                  onClick={() => setIsOpen(false)}
+                  className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                >
+                  <X size={16} />
+                </button>
+              </div>
             </div>
 
             {/* Messages */}

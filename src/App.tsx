@@ -7,6 +7,7 @@ import { Testimonials } from './components/Testimonials';
 import { ProductModal } from './components/ProductModal';
 import { AuthModal } from './components/AuthModal';
 import { Chatbot } from './components/Chatbot';
+import { WhatsAppButton } from './components/WhatsAppButton';
 import { products } from './data/products';
 import { Product } from './types';
 import { motion, AnimatePresence } from 'motion/react';
@@ -302,7 +303,10 @@ export default function App() {
                 <li onClick={() => scrollToSection('reassurance')} className="hover:text-gray-500 cursor-pointer">Notre Héritage</li>
                 <li onClick={() => scrollToSection('reassurance')} className="hover:text-gray-500 cursor-pointer">Durabilité</li>
                 <li onClick={() => scrollToSection('reassurance')} className="hover:text-gray-500 cursor-pointer">Carrières</li>
-                <li onClick={() => scrollToSection('reassurance')} className="hover:text-gray-500 cursor-pointer">Contact</li>
+                <li className="group">
+                  <span className="block text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-1">Contact</span>
+                  <a href="tel:+2250104427006" className="hover:text-gray-500 transition-colors">+225 01 04 42 70 06</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -330,6 +334,7 @@ export default function App() {
       />
 
       <Chatbot />
+      <WhatsAppButton />
     </div>
   );
 }

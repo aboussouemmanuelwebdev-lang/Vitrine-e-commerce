@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Calendar, ShieldCheck, Globe, Info, CheckCircle2, Heart, Star, Share2, Mail, ChevronRight } from 'lucide-react';
+import { X, Calendar, ShieldCheck, Globe, Info, CheckCircle2, Heart, Star, Share2, Mail, ChevronRight, MessageCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { Product } from '../types';
 import { ProductGallery } from './ProductGallery';
@@ -241,6 +241,16 @@ export function ProductModal({ product: initialProduct, onClose, isWishlisted, o
                 >
                   <Calendar size={18} />
                   <span>Réserver votre consultation</span>
+                </button>
+                <button 
+                  onClick={() => {
+                    const message = encodeURIComponent(`Bonjour LUXE26, je souhaiterais avoir des informations sur le produit : ${product.name}`);
+                    window.open(`https://wa.me/2250104427006?text=${message}`, '_blank');
+                  }}
+                  className="w-full flex items-center justify-center space-x-3 bg-[#25D366] text-white py-5 rounded-[1.5rem] text-sm font-bold hover:bg-[#128C7E] transition-colors shadow-lg"
+                >
+                  <MessageCircle size={18} className="fill-current" />
+                  <span>Discuter sur WhatsApp</span>
                 </button>
                 <p className="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-widest font-bold">
                   Aucun paiement requis • Consultation d'expert
