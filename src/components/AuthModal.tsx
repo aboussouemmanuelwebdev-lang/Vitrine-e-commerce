@@ -9,7 +9,7 @@ import {
   signInWithPopup 
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import { auth, db, handleFirestoreError, OperationType } from '../firebase';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -53,6 +53,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         setError("La fenêtre de connexion a été bloquée par votre navigateur. Veuillez autoriser les popups pour ce site.");
       } else if (err.code === 'auth/cancelled-popup-request') {
         setError("Une demande de connexion est déjà en cours.");
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setError("Ce domaine n'est pas autorisé dans la console Firebase. Veuillez ajouter 'luxe26.netlify.app' aux domaines autorisés dans l'authentification Firebase.");
+      } else if (err.code === 'auth/operation-not-allowed') {
+        setError("La connexion avec Google n'est pas activée dans votre console Firebase. Veuillez l'activer dans la section Authentication > Sign-in method.");
       } else {
         setError("Une erreur est survenue lors de la connexion avec Google. Veuillez réessayer.");
       }
@@ -94,8 +98,12 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         setError("Le mot de passe doit contenir au moins 6 caractères.");
       } else if (err.code === 'auth/invalid-email') {
         setError("L'adresse email n'est pas valide.");
+      } else if (err.code === 'auth/operation-not-allowed') {
+        setError("La connexion par Email/Mot de passe n'est pas activée dans votre console Firebase. Veuillez l'activer dans la section Authentication > Sign-in method.");
+      } else if (err.message?.includes('permission-denied') || err.code === 'permission-denied') {
+        setError("Erreur de permission Firestore. Veuillez vérifier que votre base de données Firestore est bien créée et que les règles sont déployées.");
       } else {
-        setError("Une erreur est survenue. Veuillez vérifier vos informations.");
+        setError(`Erreur: ${err.message || "Une erreur est survenue. Veuillez vérifier vos informations."}`);
       }
     } finally {
       setIsLoading(false);
